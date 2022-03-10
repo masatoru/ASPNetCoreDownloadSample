@@ -39,8 +39,7 @@ namespace ASPNetCoreDownloadSample.Controllers
             foreach (var entry in sourceArchive.Entries)
             {
                 // ディレクトリ名を新しいアプリ名に変更する
-                // var newEntryName = entry.FullName.Replace(sourceAppFileName, newAppFileName);
-                var newEntryName = entry.FullName;
+                var newEntryName = entry.FullName.Replace(sourceAppFileName, newAppFileName);
 
                 var newEntry = newArchive.CreateEntry(newEntryName);
                 Console.WriteLine($"Entry:{newEntryName}");
@@ -50,6 +49,8 @@ namespace ASPNetCoreDownloadSample.Controllers
                 {
                     archiveEntry.CopyTo(newArchiveEntry);
                 }
+
+                newEntry.ExternalAttributes = entry.ExternalAttributes;
             }
             newArchive.Dispose();  // これがないと ZIP の最後部分が書き込まれない
 
